@@ -1,14 +1,25 @@
-import Login from 'containers/Login';
-import Wallet from 'containers/Wallet';
-import { Route, Routes } from 'react-router-dom';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import Login from "containers/Login";
+import Wallet from "containers/Wallet";
+import AuthProvider from "components/AuthProvider/AuthProvider";
+import ProtectedRoute from "components/ProtectedRoute";
+import "./App.css";
 
 function App() {
   return (
-    <Routes>
-      <Route path='login' element={<Login />}/>
-      <Route path="wallet" element={<Wallet />}/>
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route path="login" element={<Login />} />
+        <Route
+          path="wallet"
+          element={
+            <ProtectedRoute>
+              <Wallet />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </AuthProvider>
   );
 }
 

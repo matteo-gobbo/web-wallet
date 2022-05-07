@@ -1,7 +1,7 @@
 interface Props {}
 
 const Wallet: React.FC<Props> = () => {
-  return <>Wallet</>
-}
+  return <>Wallet</>;
+};
 
-export default Wallet
+export default Wallet;
