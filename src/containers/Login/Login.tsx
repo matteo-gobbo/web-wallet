@@ -1,7 +1,13 @@
+import LoginForm from "components/LoginForm";
+
 interface Props {}
 
 const Login: React.FC<Props> = () => {
-  return <>Login</>;
+  return (
+    <>
+      <LoginForm />
+    </>
+  );
 };
 
 export default Login;

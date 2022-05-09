@@ -12,6 +12,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const signin = (newUser: User, callback: VoidFunction) => {
     return fakeAuthProvider.signin(() => {
+      localStorage.setItem("username", newUser.username);
       setUser(newUser);
       callback();
     });
@@ -19,6 +20,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const signout = (callback: VoidFunction) => {
     return fakeAuthProvider.signout(() => {
+      localStorage.removeItem("username");
       setUser(null);
       callback();
     });
