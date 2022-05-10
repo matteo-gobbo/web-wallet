@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { root } from "./constant";
+import { root } from "./constants";
 
 export const getCurrencies = createAsyncThunk(
   `${root}/getCurrencies`,

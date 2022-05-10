@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { root } from "entities/wallet/constant";
+import { root } from "entities/wallet/constants";
 import { getCurrencies } from "entities/wallet/services";
 import { Currency } from "models/Currency.model";
 
