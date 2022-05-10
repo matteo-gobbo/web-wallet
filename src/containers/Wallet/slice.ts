@@ -42,7 +42,6 @@ export const walletSlice = createSlice({
       state.currencies.loading = true;
     });
     builder.addCase(getCurrencies.fulfilled, (state, action) => {
-      console.log(action);
       state.currencies.loading = false;
       state.currencies.data = Object.values(action.payload);
     });
