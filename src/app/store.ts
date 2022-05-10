@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { walletSlice } from "containers/Wallet/slice";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    wallet: walletSlice.reducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
