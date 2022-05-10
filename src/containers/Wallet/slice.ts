@@ -30,6 +30,12 @@ export const walletSlice = createSlice({
     setCurrency: (state, action: PayloadAction<Currency>) => {
       state.selectedCurrency = action.payload;
     },
+    buy: (state, action: PayloadAction<number>) => {
+      state.amount += action.payload;
+    },
+    sell: (state, action: PayloadAction<number>) => {
+      state.amount -= action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getCurrencies.pending, (state) => {
@@ -48,4 +54,4 @@ export const walletSlice = createSlice({
   },
 });
 
-export const { setCurrency } = walletSlice.actions;
+export const { setCurrency, buy, sell } = walletSlice.actions;
