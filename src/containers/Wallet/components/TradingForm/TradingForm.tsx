@@ -27,7 +27,7 @@ const TradingForm: React.FC<Props> = ({
     >
       {({ errors, touched, values }) => {
         return (
-          <Form className="space-y-8 border p-8 rounded">
+          <Form className="space-y-8 border p-8 rounded w-full">
             <div>
               <label htmlFor="price">Price</label>
               <Field

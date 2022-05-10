@@ -49,9 +49,9 @@ const Wallet: React.FC<Props> = () => {
   };
 
   return (
-    <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-full flex items-center justify-center py-6 py-md-12 px-4 sm:px-6 lg:px-8">
       <div className=" w-full">
-        <div className="flex justify-between py-4 mx-16">
+        <div className="flex justify-between py-4 mx-md-16">
           <img
             className="h-12 w-auto"
             src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
@@ -82,7 +82,7 @@ const Wallet: React.FC<Props> = () => {
             ))}
           </select>
         </div>
-        <div className="flex justify-center w-1/4 bg-indigo-100 mx-auto p-4">
+        <div className="flex justify-center w-md-1/4 bg-indigo-100 mx-auto p-4">
           <div className="flex items-center	mr-4">
             <SiBitcoinsv size={30} className="text-indigo-500" />
           </div>
@@ -101,7 +101,7 @@ const Wallet: React.FC<Props> = () => {
         </div>
 
         {selectedCurrency && (
-          <div className="flex justify-center space-x-8 p-8">
+          <div className="md:flex justify-center space-y-8 md:space-y-0 md:space-x-8 py-8">
             <TradingForm
               initialValues={initialValuesBuy}
               onSubmit={handleBuy}
