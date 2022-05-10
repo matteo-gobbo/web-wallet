@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "app/store";
 import Login from "containers/Login";
@@ -21,6 +21,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="*" element={<Navigate to="/wallet" replace />} />
         </Routes>
       </AuthProvider>
     </Provider>
