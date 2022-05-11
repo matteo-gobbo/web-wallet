@@ -31,3 +31,8 @@ The build is minified and the filenames include the hashes.
 - Fetch exchange rates using https://www.blockchain.com/api/exchange_rates_api
 - Select a currency and update the amount of the user
 - Sell or buy bitcoin
+
+## Notes
+
+To login you can use any user or password you want.
+The application displays error only if you don't put anything or use protected values such as "admin" for username and "password" for password.
