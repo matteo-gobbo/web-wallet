@@ -14,7 +14,7 @@ interface WalletState {
 }
 
 const initialState: WalletState = {
-  amount: 2.5,
+  amount: 0,
   currencies: {
     loading: false,
     data: [],
@@ -36,6 +36,14 @@ export const walletSlice = createSlice({
     sell: (state, action: PayloadAction<number>) => {
       state.amount -= action.payload;
     },
+    reset: (state) => {
+      state.amount = 0;
+      state.currencies = initialState.currencies;
+      state.selectedCurrency = initialState.selectedCurrency;
+    },
+    init: (state) => {
+      state.amount = 2.5;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getCurrencies.pending, (state) => {
@@ -53,4 +61,4 @@ export const walletSlice = createSlice({
   },
 });
 
-export const { setCurrency, buy, sell } = walletSlice.actions;
+export const { setCurrency, buy, sell, reset, init } = walletSlice.actions;

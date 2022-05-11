@@ -1,27 +1,22 @@
-import { useAuth } from "components/AuthProvider/hooks";
-import { validatePassword, validateUsername } from "entities/login/utils";
 import { Field, Form, Formik } from "formik";
-import { useLocation, useNavigate } from "react-router-dom";
+import { validatePassword, validateUsername } from "entities/login/utils";
 
-interface Props {}
+interface Props {
+  initialValues: {
+    username: string;
+    password: string;
+  };
+  onSubmit: Function;
+}
 
-const LoginForm: React.FC<Props> = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const auth = useAuth();
-  const initialValues = { username: "", password: "" };
-
-  // typescript error on location.state
-  const from = (location.state as any)?.from?.pathname || "/";
-
+const LoginForm: React.FC<Props> = ({ initialValues, onSubmit }) => {
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={(values, actions) => {
+        onSubmit(values);
         actions.setSubmitting(false);
-        auth.signin({ username: values.username }, () =>
-          navigate(from, { replace: true })
-        );
+        actions.resetForm();
       }}
     >
       {({ errors, touched }) => {

@@ -1,28 +1,51 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { useAuth } from "components/AuthProvider/hooks";
-import { getCurrencies } from "entities/wallet/services";
 import { selectAmount, selectCurrencies, selectCurrency } from "./selectors";
-import { buy, sell, setCurrency } from "./slice";
+import { setCurrency } from "./slice";
 import TradingForm from "./components/TradingForm";
 import { SiBitcoinsv } from "react-icons/si";
 import { BiBitcoin } from "react-icons/bi";
 import { validateBuyAmount, validateSellAmount } from "entities/wallet/utils";
+import { useLogout } from "containers/Login/hooks";
+import { fakeAuthProvider } from "utils/fakeAuthProvider";
+import {
+  useBuy,
+  useFetchCurrencies,
+  useResetWalletValues,
+  useSell,
+  useSetWalletInitialValues,
+} from "./hooks";
 
 interface Props {}
 
 const Wallet: React.FC<Props> = () => {
-  const navigate = useNavigate();
-  const auth = useAuth();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  //
+  const logout = useLogout();
+  const resetWalletValues = useResetWalletValues();
+  const buy = useBuy();
+  const sell = useSell();
+
+  //
+  useFetchCurrencies();
+  useSetWalletInitialValues();
+
+  //
   const currencies = useAppSelector(selectCurrencies);
   const selectedCurrency = useAppSelector(selectCurrency);
   const userAmount = useAppSelector(selectAmount);
 
-  useEffect(() => {
-    dispatch(getCurrencies());
-  }, [dispatch]);
+  //
+  const handleLogout = () => {
+    fakeAuthProvider.signout(() => {
+      resetWalletValues();
+      logout();
+      localStorage.removeItem("username");
+      navigate("/login", { replace: true });
+    });
+  };
 
   //
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -41,14 +64,6 @@ const Wallet: React.FC<Props> = () => {
     amount: 0,
   };
 
-  const handleBuy = (values: any) => {
-    dispatch(buy(Number(values.amount)));
-  };
-
-  const handleSell = (values: any) => {
-    dispatch(sell(Number(values.amount)));
-  };
-
   return (
     <div className="min-h-full flex items-center justify-center py-6 py-md-12 px-4 sm:px-6 lg:px-8">
       <div className=" w-full">
@@ -59,9 +74,7 @@ const Wallet: React.FC<Props> = () => {
             alt="Workflow"
           />
           <button
-            onClick={() =>
-              auth.signout(() => navigate("/login", { replace: true }))
-            }
+            onClick={handleLogout}
             className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Logout
@@ -105,7 +118,7 @@ const Wallet: React.FC<Props> = () => {
           <div className="md:flex justify-center space-y-8 md:space-y-0 md:space-x-8 py-8">
             <TradingForm
               initialValues={initialValuesBuy}
-              onSubmit={handleBuy}
+              onSubmit={(values: any) => buy(values.amount)}
               textButton="Buy"
               additionalClassesButton="bg-green-600 hover:bg-green-700 disabled:bg-green-100"
               userAmount={userAmount}
@@ -113,7 +126,7 @@ const Wallet: React.FC<Props> = () => {
             />
             <TradingForm
               initialValues={initialValuesSell}
-              onSubmit={handleSell}
+              onSubmit={(values: any) => sell(values.amount)}
               textButton="Sell"
               additionalClassesButton="bg-red-600 hover:bg-red-700 disabled:bg-red-100"
               userAmount={userAmount}

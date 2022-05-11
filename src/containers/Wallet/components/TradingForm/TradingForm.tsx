@@ -41,7 +41,7 @@ const TradingForm: React.FC<Props> = ({
                 className="rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 value={initialValues.price}
               />
-              {errors.price && (
+              {errors.price && touched.price && (
                 <div className="text-red-500">{errors.price}</div>
               )}
             </div>
@@ -54,7 +54,7 @@ const TradingForm: React.FC<Props> = ({
                 className="rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 validate={(value: number) => validateAmount(value, userAmount)}
               />
-              {errors.amount && (
+              {errors.amount && touched.amount && (
                 <div className="text-red-500">{errors.amount}</div>
               )}
             </div>

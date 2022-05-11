@@ -1,8 +1,29 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import LoginForm from "components/LoginForm";
+import { fakeAuthProvider } from "utils/fakeAuthProvider";
+import { useLogin } from "./hooks";
 
 interface Props {}
 
 const Login: React.FC<Props> = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const login = useLogin();
+
+  const from = (location.state as any)?.from?.pathname || "/";
+
+  const initialValues = { username: "", password: "" };
+
+  // TODO: add values types
+  const handleLogin = (values: any) => {
+    fakeAuthProvider.signin(() => {
+      login(values.username);
+      localStorage.setItem("username", values.username);
+      navigate(from, { replace: true });
+    });
+  };
+
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -16,7 +37,7 @@ const Login: React.FC<Props> = () => {
             Sign in to your account
           </h2>
         </div>
-        <LoginForm />
+        <LoginForm initialValues={initialValues} onSubmit={handleLogin} />
       </div>
     </div>
   );

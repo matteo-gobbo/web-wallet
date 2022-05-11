@@ -1,3 +1,4 @@
+import { useRevalidate } from "containers/Login/hooks";
 import { Navigate, useLocation } from "react-router-dom";
 
 interface Props {
@@ -5,12 +6,14 @@ interface Props {
 }
 
 const ProtectedRoute: React.FC<Props> = ({ children }) => {
-  let location = useLocation();
+  const location = useLocation();
+  const revalidate = useRevalidate();
 
   if (!localStorage.getItem("username")) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
+  revalidate(localStorage.getItem("username")!);
   return children;
 };
 
