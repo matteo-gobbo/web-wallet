@@ -1,7 +1,7 @@
 import { useAuth } from "components/AuthProvider/hooks";
+import { validatePassword, validateUsername } from "entities/login/utils";
 import { Field, Form, Formik } from "formik";
 import { useLocation, useNavigate } from "react-router-dom";
-import { validatePassword, validateUsername } from "utils/validations";
 
 interface Props {}
 

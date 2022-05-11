@@ -8,6 +8,8 @@ interface Props {
   onSubmit: Function;
   textButton: string;
   additionalClassesButton: string;
+  userAmount: number;
+  validateAmount: Function;
 }
 
 const TradingForm: React.FC<Props> = ({
@@ -15,6 +17,8 @@ const TradingForm: React.FC<Props> = ({
   onSubmit,
   textButton,
   additionalClassesButton,
+  userAmount,
+  validateAmount,
 }) => {
   return (
     <Formik
@@ -37,7 +41,9 @@ const TradingForm: React.FC<Props> = ({
                 className="rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 value={initialValues.price}
               />
-              {errors.price && touched.price && <div>{errors.price}</div>}
+              {errors.price && (
+                <div className="text-red-500">{errors.price}</div>
+              )}
             </div>
             <div>
               <label htmlFor="amount">Amount</label>
@@ -46,13 +52,20 @@ const TradingForm: React.FC<Props> = ({
                 name="amount"
                 type="number"
                 className="rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                validate={(value: number) => validateAmount(value, userAmount)}
               />
-              {errors.amount && touched.amount && <div>{errors.amount}</div>}
+              {errors.amount && (
+                <div className="text-red-500">{errors.amount}</div>
+              )}
             </div>
             <button
               type="submit"
               className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${additionalClassesButton}`}
-              disabled={initialValues.amount === Number(values.amount)}
+              disabled={
+                initialValues.amount === Number(values.amount) ||
+                !!errors.amount ||
+                !!errors.price
+              }
             >
               {textButton}
             </button>

@@ -8,6 +8,7 @@ import { buy, sell, setCurrency } from "./slice";
 import TradingForm from "./components/TradingForm";
 import { SiBitcoinsv } from "react-icons/si";
 import { BiBitcoin } from "react-icons/bi";
+import { validateBuyAmount, validateSellAmount } from "entities/wallet/utils";
 
 interface Props {}
 
@@ -107,12 +108,16 @@ const Wallet: React.FC<Props> = () => {
               onSubmit={handleBuy}
               textButton="Buy"
               additionalClassesButton="bg-green-600 hover:bg-green-700 disabled:bg-green-100"
+              userAmount={userAmount}
+              validateAmount={validateBuyAmount}
             />
             <TradingForm
               initialValues={initialValuesSell}
               onSubmit={handleSell}
               textButton="Sell"
               additionalClassesButton="bg-red-600 hover:bg-red-700 disabled:bg-red-100"
+              userAmount={userAmount}
+              validateAmount={validateSellAmount}
             />
           </div>
         )}
